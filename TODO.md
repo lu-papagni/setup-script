@@ -9,6 +9,8 @@
 - [ ] Impostazioni varie riguardo al *locale*
 - [ ] Configurare `git-credential-manager`
 - [ ] Configurare KDE.
+- [ ] Supporto Arch Linux
+- [ ] Supporto Fedora
 
 ## Organizzazione del codice
 - Uno script principale che importa gli altri script minori.
