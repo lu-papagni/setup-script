@@ -1,4 +1,3 @@
-!yay
 asciiquarium-transparent-git
 cbonsai
 cmatrix-git
