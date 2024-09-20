@@ -1,0 +1,4 @@
+!yay
+snapper
+grub-btrfs
+inotify-tools

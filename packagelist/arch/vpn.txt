@@ -1,0 +1,3 @@
+!yay
+networkmanager-openvpn
+networkmanager-openconnect
