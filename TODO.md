@@ -1,16 +1,17 @@
 # TODO
 
 ## Quali funzioni servono?
-- [ ] Installare pacchetti
-- [ ] Clonare la repository `dots`
-- [ ] Linkare i file/cartelle dalla repository a `~/.config`
-- [ ] Cambiare la shell di default
+- [x] Installare pacchetti
+- [x] Clonare la repository `dots`
+- [x] Linkare i file/cartelle dalla repository a `~/.config`
+- [x] Cambiare la shell di default
 - [ ] Configurare Spicetify
 - [ ] Impostazioni varie riguardo al *locale*
 - [ ] Configurare `git-credential-manager`
-- [ ] Configurare KDE.
+- [ ] Configurare KDE
 - [ ] Supporto Arch Linux
-- [ ] Supporto Fedora
+- [ ] OPZIONALE: supporto Fedora
+- [ ] OPZIONALE: supporto Debian
 
 ## Organizzazione del codice
 - Uno script principale che importa gli altri script minori.
@@ -19,3 +20,7 @@
 
 ## Testing
 Qualcosa non funziona? Aggiungi qui i bug e spuntali una volta risolti.
+
+Da testare:
+- [ ] Link-ConfigFiles
+- [ ] Setup-Distribution
