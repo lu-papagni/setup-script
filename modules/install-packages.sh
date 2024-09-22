@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-[[ -v __DEFINE_PACKAGEINST ]] && return
-readonly __DEFINE_PACKAGEINST
-
-SOURCES_SRC_DIR="packagelist"
-
 # Effettua il setup del package manager
 function Setup-PackageManager() {
   local -r manager="$1"
