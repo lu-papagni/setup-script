@@ -8,8 +8,8 @@
 - [ ] Configurare Spicetify
 - [ ] Impostazioni varie riguardo al *locale*
 - [ ] Configurare `git-credential-manager`
-- [ ] Configurare KDE
-- [ ] Supporto Arch Linux
+- [x] Configurare KDE
+- [x] Supporto Arch Linux
 - [ ] OPZIONALE: supporto Fedora
 - [ ] OPZIONALE: supporto Debian
 
@@ -20,7 +20,3 @@
 
 ## Testing
 Qualcosa non funziona? Aggiungi qui i bug e spuntali una volta risolti.
-
-Da testare:
-- [ ] Link-ConfigFiles
-- [ ] Setup-Distribution
