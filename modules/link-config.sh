@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-[[ -v __DEFINE_LINK ]] && return
-readonly __DEFINE_LINK
-
 function Link-ConfigFiles() {
   local -r conf_dir="${DOTS_DIR:-"~/.dotfiles"}"
   local -r ignorefile='link-ignore.txt'
