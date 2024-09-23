@@ -1,0 +1,94 @@
+{
+  "additional-repositories": [
+    "multilib"
+  ],
+  "archinstall-language": "English",
+  "audio_config": {
+    "audio": "pipewire"
+  },
+  "bootloader": "Grub",
+  "config_version": "2.8.6",
+  "debug": false,
+  "disk_config": {},
+  "hostname": "archlinux",
+  "kernels": [
+    "linux"
+  ],
+  "locale_config": {
+    "kb_layout": "us",
+    "sys_enc": "UTF-8",
+    "sys_lang": "it_IT"
+  },
+  "mirror_config": {
+    "custom_mirrors": [],
+    "mirror_regions": {
+      "Italy": [
+        "http://it.mirrors.cicku.me/archlinux/$repo/os/$arch",
+        "https://it.mirrors.cicku.me/archlinux/$repo/os/$arch",
+        "http://archlinux.mirror.server24.net/$repo/os/$arch",
+        "https://archlinux.mirror.server24.net/$repo/os/$arch",
+        "http://archlinux.mirror.garr.it/archlinux/$repo/os/$arch"
+      ]
+    }
+  },
+  "network_config": {
+    "type": "nm"
+  },
+  "no_pkg_lookups": false,
+  "ntp": true,
+  "offline": false,
+  "packages": [
+    "man-db",
+    "less",
+    "git",
+    "neovim",
+    "lsd",
+    "fastfetch",
+    "plasma-meta",
+    "egl-wayland",
+    "plasma-workspace",
+    "kate",
+    "ark",
+    "dolphin",
+    "kolourpaint",
+    "filelight",
+    "gwenview",
+    "kitty",
+    "flatpak",
+    "zsh",
+    "fzf",
+    "bat",
+    "btop",
+    "ripgrep",
+    "wl-clipboard",
+    "libfprint",
+    "fprintd",
+    "rclone",
+    "npm",
+    "nodejs",
+    "zip",
+    "unzip",
+    "python",
+    "python-pip",
+    "jdk21-openjdk",
+    "ttf-jetbrains-mono-nerd"
+  ],
+  "parallel downloads": 0,
+  "profile_config": {
+    "gfx_driver": null,
+    "greeter": null,
+    "profile": {
+      "custom_settings": {},
+      "details": [],
+      "main": "Minimal"
+    }
+  },
+  "script": "guided",
+  "silent": false,
+  "skip_ntp": false,
+  "skip_version_check": false,
+  "swap": true,
+  "timezone": "Europe/Rome",
+  "uki": false,
+  "version": "2.8.6"
+}
