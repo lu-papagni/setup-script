@@ -1,7 +1,5 @@
 asciiquarium-transparent-git
 cbonsai
 cmatrix-git
-onedrive-abraunegg
-onedrive_tray-git
 pam-fprint-grosshack
 pipes.sh
