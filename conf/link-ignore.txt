@@ -5,3 +5,4 @@
 DOCS$/
 setup$/
 .*.ohmyzsh
+systemd$/
