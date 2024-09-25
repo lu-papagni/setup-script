@@ -8,11 +8,10 @@ function Setup-PackageManager() {
     'yay')
       if [[ "$(whoami)" != "root" ]]; then
         yay -Syu
-      else if [[ -n "$SUDO_USER" ]]; then
+      elif [[ -n "$SUDO_USER" ]]; then
         sudo -u "$SUDO_USER" yay -Syu
       else
         echo "L'amministratore non può effettuare il setup di \`yay\`"
-      fi
       fi
       ;;
     'flatpak')
@@ -27,39 +26,33 @@ function Setup-PackageManager() {
   esac
 }
 
-# Ottiene i nomi delle fonti per un package manager
-function Get-PackageSources() {
-  local -r manager="$1"
-
-  if [[ -n "$manager" ]]; then
-    echo -n "$(find "$SOURCES_SRC_DIR/$manager" -mindepth 1 -type f -name '*.txt')"
-  else
-    return 1
-  fi
-}
-
 # Rimuove le fonti indesiderate per indice
 function Remove-UnwantedSources() {
   local remove_indices
   local sources=("$@")
 
   # Stampo lista
+  local source_name
+
   for i in ${!sources[@]}; do
-    local source_name="$(basename "${sources[$i]}")"
+    source_name="$(basename "${sources[$i]}")"
     source_name="${source_name/%\.*/}"
 
     # Stampo su stderr
     echo "$((i+1))) $source_name" >&2
   done
 
+  unset source_name
+
+  # Leggo fonti da ignorare
   read -p "Fonti da ignorare (separate da spazi, INVIO per annullare): " -a remove_indices
   
   # Rimuovo gli elementi
-  for k in "$remove_indices"; do
+  for k in ${remove_indices[@]}; do
     [[ "$k" =~ [[:digit:]] ]] && unset sources[$((k-1))]
   done
 
-  echo -n "${sources[@]}"
+  echo "${sources[@]}"
 }
 
 # Ottiene il comando che determina i privilegi del package manager
@@ -91,13 +84,15 @@ function Get-PrivilegePrefix() {
 
 # Logica principale installazione
 function Install-Packages() {
+  local sources_dir="${SOURCES_SRC_DIR:-"packagelist"}"
+
   # Controllo se esiste la directory
-  if [[ ! -d "$SOURCES_SRC_DIR" ]]; then
-    echo "Era prevista una directory \`$SOURCES_SRC_DIR\` nella directory di lavoro, ma non è stata trovata."
+  if [[ ! -d "$sources_dir" ]]; then
+    echo "Era prevista una directory \`$sources_dir\` nella directory di lavoro, ma non è stata trovata."
     return 1
   fi
 
-  local -r managers=("$(find "$SOURCES_SRC_DIR" -mindepth 1 -maxdepth 1 -type d | xargs -I{} basename {})")
+  local -r managers=("$(find "$sources_dir" -mindepth 1 -maxdepth 1 -type d | xargs -I{} basename {})")
 
   # Parsing del file
   for manager in ${managers[@]}; do
@@ -110,7 +105,7 @@ function Install-Packages() {
         'yay')
           install_cmd="-S --needed"
           run_as="user"
-          skip_confirm_cmd="--assumeyes"
+          skip_confirm_cmd="--noconfirm --askyesremovemake"
           ;;
         'dnf')
           install_cmd="install"
@@ -133,12 +128,11 @@ function Install-Packages() {
       esac
 
       # Ottengo le fonti
-      local sources=("$(Get-PackageSources "$manager")")
-
-      echo "Trovate ${#sources[@]} fonti per \`$manager\`:"
+      local sources=("$(find "$sources_dir/$manager" -mindepth 1 -type f -name '*.txt')")
 
       # Rimuovo gli elementi
-      sources="$(Remove-UnwantedSources "$sources")"
+      echo "Fonti per \`$manager\`:"
+      sources="$(Remove-UnwantedSources ${sources[@]})"
 
       # Installo i pacchetti
       for source in ${sources[@]}; do
