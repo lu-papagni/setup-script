@@ -3,3 +3,4 @@ cbonsai
 cmatrix-git
 pam-fprint-grosshack
 pipes.sh
+git-credential-oauth
