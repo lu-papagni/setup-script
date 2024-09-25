@@ -2,11 +2,10 @@
 
 function Import-PlasmaSettings() {
   local -r profile="$1"
-  local -r profile_path="$DOTS_DIR/konsave/profiles/$profile"
 
   if [[ -r "$profile_path" ]]; then
     echo "Caricamento profilo \`$profile\`"
-    konsave -a "$profile_path"
+    konsave -a "$profile"
   fi
 }
 
