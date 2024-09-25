@@ -19,7 +19,11 @@ if [[ $? -ne 0 ]]; then
   exit 1
 fi
 
-Link-ConfigFiles
+Link-ConfigFiles "conf/link-ignore.txt"
+Setup-Systemd
+Setup-Apps
 
 # Cambio shell
 chsh -s "$(command -v 'zsh')" "${SUDO_USER:-$(whoami)}"
+
+echo "Fatto!"
