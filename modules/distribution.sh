@@ -1,52 +1,43 @@
 #!/usr/bin/env bash
 
+# Compila ed installa un AUR helper dato il link della sua repository
 function Install-AurHelper() {
-  local build_dir="$(mktemp -d)"
-  local -r url='https://aur.archlinux.org/yay.git'
+  local -r build_dir="$(mktemp -d)"
+  local -r url="$1"
+  local name="$url"
 
-  (
-    git clone --depth=1 "$url" "$build_dir" && \
-    cd "$build_dir" && \
-    makepkg -si
-  )
+  if [[ -z "$url" || "$url" != https://?*.?*/?*.git ]]; then
+    echo "URL \`$url\` invalido perché nullo o non è una repo Git."
+    return 1
+  fi
+
+  # Estraggo il nome della repository 
+  name="${name##\/}"; name="${name%\.git}"
+
+  echo "Installazione di \`$name\` in corso..."
+
+  echo "Clonazione della repository in \`$build_dir\`"
+  git clone --depth=1 "$url" "$build_dir" && ( cd "$build_dir" && makepkg -si )
 
   if [[ $? -eq 0 ]]; then
-    echo "Installazione riuscita!"
+    echo "Operazione riuscita!"
   else
-    echo "Installazione fallita!"
+    echo "Operazione fallita!"
   fi
 }
 
 function Setup-Distribution() {
   local current="$(cat '/etc/os-release' | grep -oP 'PRETTY_NAME="\K[^"]+')"
-  local supported=(
-    'arch'
-    'fedora'
-    'debian'
-  )
 
-  local i=0
-  for distro in ${supported[@]}; do
-    if echo "$current" | grep -i "$distro" &> /dev/null; then
-      current="$distro"
-      echo "La distribuzione è supportata."
-      break
-    fi
-    ((i+=1))
-  done
+  local -r current_name="$(echo -n "$current" |
+    grep -Pio '(arch|fedora|debian)' |
+    tr '[:upper:]' '[:lower:]')"
 
-  # Esci se la distribuzione non è supportata
-  if [[ $i -ge ${#supported[@]} ]]; then
-    echo "Distribuzione non supportata."
-    return 1
-  fi
+  echo "Configurazione di \`$current_name\` in corso..."
 
-  unset i
-
-  case "$current" in
+  case "$current_name" in
     'arch')
-      echo "Installazione AUR helper..."
-      Install-AurHelper
+      Install-AurHelper 'https://aur.archlinux.org/yay.git'
 
       # TODO: Servizio di stampa
       # TODO: Impostazioni del package manager
@@ -58,6 +49,9 @@ function Setup-Distribution() {
       ;;
     'debian')
       echo "Coming soon..."
+      ;;
+    *)
+      echo "La distribuzione \`$current_name\` non è supportata!"
       ;;
   esac
 
