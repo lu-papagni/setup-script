@@ -3,9 +3,10 @@
 # Importa tutti i moduli
 for f in modules/*.sh; do source $f; done
 
-DOTS_DIR="$HOME/.dotfiles"
-DOTS_REPO='https://github.com/lu-papagni/dots.git' 
-SOURCES_SRC_DIR="packagelist"
+readonly DOTS_DIR="$HOME/.dotfiles"
+readonly DOTS_REPO='https://github.com/lu-papagni/dots.git' 
+readonly SOURCES_SRC_DIR="packagelist"
+readonly FAV_SHELL='zsh'
 
 if [[ ! -d "$DOTS_DIR" ]]; then
   mkdir -p "$DOTS_DIR"
@@ -26,9 +27,9 @@ Setup-Systemd
 Setup-Apps
 
 # Cambio shell
-if [[ "$SHELL" != *zsh ]]; then
+if [[ "$SHELL" != *"$FAV_SHELL" ]]; then
   echo "Cambio shell di default"
-  chsh -s "$(command -v 'zsh')" "${SUDO_USER:-$(whoami)}"
+  chsh -s "$(command -v "$FAV_SHELL")" "${SUDO_USER:-$(whoami)}"
 fi
 
 echo "Fatto!"
