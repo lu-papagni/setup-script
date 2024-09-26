@@ -7,7 +7,7 @@
 - [x] Cambiare la shell di default
 - [ ] Configurare Spicetify
 - [ ] Impostazioni varie riguardo al *locale*
-- [ ] Configurare `git-credential-manager`
+- [x] Configurare `git-credential-oauth`
 - [x] Configurare KDE
 - [x] Supporto Arch Linux
 - [ ] OPZIONALE: supporto Fedora
