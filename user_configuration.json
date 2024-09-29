@@ -66,6 +66,7 @@
     "wl-clipboard",
     "libfprint",
     "fprintd",
+    "fwupd",
     "rclone",
     "npm",
     "nodejs",
