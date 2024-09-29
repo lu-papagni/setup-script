@@ -1,15 +1,21 @@
 #!/usr/bin/env bash
 
-function Config-AppIfInstalled() {
-  local -r name="$1"
-  local -r cmd="$2"
-
-  if command -v "$name" &> /dev/null; then
-    sh -c "$name $cmd"
-  fi
-}
-
 function Setup-Apps() {
+  echo "Configurazione delle app in corso..."
+
   # Autenticazione automatica github
-  Config-AppIfInstalled git-credential-oauth 'config'
+  if command -v 'git-credential-oauth' &> /dev/null; then
+    git-credential-oauth config
+  fi
+
+  # TEST: Decifra file configurazione di rclone
+  if command -v 'rclone' &> /dev/null; then
+    local -r rclone_config="$HOME/.config/rclone/rclone.conf.gpg" 
+
+    if [[ -f "$rclone_config" ]]; then
+      gpg -d "$rclone_config" > "${rclone_config%\.gpg}"
+    else
+      echo "rclone: file di configurazione criptato non trovato."
+    fi
+  fi
 }
