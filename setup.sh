@@ -16,19 +16,21 @@ if [[ ! -d "$DOTS_DIR" ]]; then
     echo "Clonazione di \`$DOTS_REPO\` fallita!"
     exit 1
   fi
+
+  ( cd "$DOTS_REPO" && git submodule update --remote )
 fi
 
 Setup-System
 Setup-Distribution
 Install-Packages
-Setup-DesktopEnvironment
 Link-ConfigFiles "conf/link-ignore.txt"
 Setup-Systemd
+Setup-DesktopEnvironment
 Setup-Apps
 
 # Cambio shell
 if [[ "$SHELL" != *"$FAV_SHELL" ]]; then
-  echo "Cambio shell di default"
+  echo "Cambio shell di default: \`${SHELL##*/}\` -> \`$FAV_SHELL\`"
   chsh -s "$(command -v "$FAV_SHELL")" "${SUDO_USER:-$(whoami)}"
 fi
 
