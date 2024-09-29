@@ -13,7 +13,7 @@ function Setup-Apps() {
   if command -v 'rclone' &> /dev/null; then
     echo "rclone"
 
-    local -r rclone_config="$HOME/.config/rclone/rclone.conf.gpg" 
+    local rclone_config="$HOME/.config/rclone/rclone.conf.gpg" 
 
     if [[ -f "$rclone_config" ]]; then
       gpg -d "$rclone_config" > "${rclone_config%\.gpg}"
