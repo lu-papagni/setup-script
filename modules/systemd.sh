@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
+# TEST: Enable-SystemdUnits
 function Enable-SystemdUnits() {
   local -r src_dir="$1"
   local -r flags="$3"
-  local copied_units=()
 
   if [[ ! -d "$src_dir" ]]; then
     echo "Directory fonte \`$src_dir\` non trovata!" >&2
@@ -11,57 +11,39 @@ function Enable-SystemdUnits() {
     return 1
   fi
 
+  local units=("$(find "$src_dir" -mindepth 1 -type f -regextype posix-extended -regex '.*\.(service|timer)$')")
+
   # Abilita unità
-  for unit in ${src_dir}/*; do
+  for unit in "${units[@]}"; do
     local unit_name="$(basename "$unit")"
 
-    # Se è un timer
-    if [[ "$unit" == *.timer ]] && ! systemctl status "$unit_name"; then
-      systemctl "$flags" enable "$unit"
+    # Se è un servizio controllo che ci sia un timer associato
+    if [[ "$unit" == *.service ]]; then
+      # Sostituisco `.service` con `.timer`
+      local timer_name="${unit_name%\.service}.timer"
 
-      if [ $? -eq 0 ]; then
-        enabled_units+=("$unit_name")
-        echo "Abilitato timer: \`$unit\`" >&2
-        echo "Errore abilitazione timer: \`$unit\`"
-      fi
+      [[ -f "$timer_name" ]] && unit_name="$timer_name"
+    fi
 
-    # Altrimenti se è un servizio
-    elif [[ "$unit" == *.service ]]; then
-      local timer_file="${unit_name%.service}.timer"
+    systemctl "$flags" enable "$unit_name"
 
-      # Se non ha un timer corrispondente
-      if [[ ! " ${enabled_units[@]} " =~ " $timer_file " ]]; then
-        systemctl "$flags" enable "$unit"
-
-        if [ $? -eq 0 ]; then
-          echo "Abilitato servizio: \`$unit\`" >&2
-          echo "Errore abilitazione servizio: \`$unit\`"
-        fi
-
-      else
-        systemctl "$flags" enable "$timer_file"
-
-        if [ $? -eq 0 ]; then
-          echo "Abilitato timer: \`$timer_file\`" >&2
-          echo "Errore abilitazione timer: \`$timer_file\`" >&2
-        fi
-      fi
+    if [[ $? -eq 0 ]]; then
+      echo "Abilitata unità: \`$unit_name\`" >&2
+    else
+      echo "Errore abilitazione unità: \`$unit_name\`" >&2
     fi
   done
 }
 
 function Setup-Systemd() {
-  local -r systemd_loc="/etc/systemd"
-  local -r systemd_dots="$DOTS_DIR/systemd"
-  local -r sys_dir="$systemd_loc/user"
-  local -r usr_dir="$systemd_loc/system"
+  local -r systemd_dots="${DOTS_DIR:-"$HOME/.dotfiles"}/systemd"
 
   if [[ -d "$systemd_dots" ]]; then
     echo "Abilito unità di sistema" >&2
-    Enable-SystemdUnits "$systemd_dots/system" "$sys_dir" ""
+    Enable-SystemdUnits "$systemd_dots/system"
 
     echo "Abilito unità utente" >&2
-    Enable-SystemdUnits "$systemd_dots/user" "$usr_dir" "--user"
+    Enable-SystemdUnits "$systemd_dots/user" "--user"
   else
     echo "Non sono trovate unità systemd definite dall'utente." >&2
     return 1
