@@ -47,6 +47,8 @@
     "plasma-meta",
     "egl-wayland",
     "plasma-workspace",
+    "easyeffects",
+    "reflector",
     "kate",
     "ark",
     "dolphin",
