@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-# TEST: Enable-SystemdUnits
 function Enable-SystemdUnits() {
   local -r src_dir="$1"
-  local -r flags="$3"
+  local -r flags="$2"
 
   if [[ ! -d "$src_dir" ]]; then
     echo "Directory fonte \`$src_dir\` non trovata!" >&2
