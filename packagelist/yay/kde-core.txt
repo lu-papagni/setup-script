@@ -1,0 +1,5 @@
+konsave
+power-profiles-daemon
+spectacle
+kdeconnect
+print-manager
