@@ -1,4 +1,3 @@
 kwin-effects-forceblur
 kwin-scripts-krohnkite-git
 klassy
-konsave
