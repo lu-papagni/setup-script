@@ -6,7 +6,8 @@
 - [x] Linkare i file/cartelle dalla repository a `~/.config`
 - [x] Cambiare la shell di default
 - [ ] Configurare Spicetify
-- [ ] Impostazioni varie riguardo al *locale*
+- [ ] Bluetooth
+- [ ] Firewall
 - [x] Configurare `git-credential-oauth`
 - [x] Configurare KDE
 - [x] Supporto Arch Linux
