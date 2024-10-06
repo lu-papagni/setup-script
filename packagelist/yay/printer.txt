@@ -1,0 +1,6 @@
+cups
+cups-browsed
+cups-filters
+cups-pdf
+system-config-printer
+nss-mdns
