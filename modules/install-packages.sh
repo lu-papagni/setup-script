@@ -21,12 +21,12 @@ function Setup-PackageManager() {
       ;;
     'dnf')
       # Impostazioni migliori per dnf
-      echo "Carico impostazioni per \`dnf\`"
-      sudo sh -c 'cat >> /etc/dnf/dnf.conf' <<EOF
+      echo "Carico impostazioni migliori per \`dnf\`"
+      echo '
       defaultyes=True
       fastestmirror=True
       max_parallel_downloads=10
-      EOF
+      ' | sudo tee -a /etc/dnf/dnf.conf
 
       # Ricreo la cache
       sudo dnf clear all
