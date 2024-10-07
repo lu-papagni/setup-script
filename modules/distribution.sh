@@ -44,15 +44,14 @@ function Setup-Distribution() {
       # TODO: Pulizia automatica cache pacman
       ;;
     'fedora')
-      # TEST: installazione automatica di `JetBrainsMono Nerd Font`
-      # versione di Aprile 2024
+      # installazione automatica di `JetBrainsMono Nerd Font` versione di Aprile 2024
       echo "Installazione di font non presenti nelle repository..."
       curl -LO --output-dir '/tmp' 'https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip'
 
       if unzip -tqq '/tmp/JetBrainsMono.zip' &> /dev/null; then
         echo "File ZIP scaricato senza errori."
-        mkdir -p '~/.local/share/fonts' && \
-        unzip -dq '~/.local/share/fonts' '/tmp/JetBrainsMono.zip' 'JetBrainsMonoNerdFont-*.ttf'
+        mkdir -p "$HOME/.local/share/fonts" && \
+        unzip '/tmp/JetBrainsMono.zip' 'JetBrainsMonoNerdFont-*.ttf' -d "$HOME/.local/share/fonts" -q
       else
         echo "Il file ZIP è corrotto. Riprovare."
       fi
