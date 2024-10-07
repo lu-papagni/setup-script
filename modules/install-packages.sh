@@ -15,10 +15,30 @@ function Setup-PackageManager() {
       fi
       ;;
     'flatpak')
+      # flathub
+      echo "Aggiungo FlatHub..."
       flatpak remote-add --if-not-exixts 'flathub' 'https://dl.flathub.org/repo/flathub.flatpakrepo'
       ;;
     'dnf')
-      echo "ATTENZIONE: nessun setup specifico per \`$manager\`"
+      # Impostazioni migliori per dnf
+      echo "Carico impostazioni per \`dnf\`"
+      sudo sh -c 'cat >> /etc/dnf/dnf.conf' <<EOF
+      defaultyes=True
+      fastestmirror=True
+      max_parallel_downloads=10
+      EOF
+
+      # Ricreo la cache
+      sudo dnf clear all
+      sudo dnf makecache
+      sudo dnf update -y
+
+      # rpm fusion
+      echo "Abilito RPM Fusion..."
+      sudo dnf install \
+        "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm"
+      sudo dnf install \
+        "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
       ;;
     'apt' | 'apt-get')
       echo "ATTENZIONE: nessun setup specifico per \`$manager\`"
@@ -100,6 +120,8 @@ function Install-Packages() {
       local install_cmd
       local run_as
       local skip_confirm_cmd
+
+      Setup-PackageManager
 
       case "$manager" in
         'yay')

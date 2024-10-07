@@ -44,8 +44,6 @@ function Setup-Distribution() {
       # TODO: Pulizia automatica cache pacman
       ;;
     'fedora')
-      # TODO: rpm fusion
-      echo "Coming soon..."
       ;;
     'debian')
       echo "Coming soon..."
