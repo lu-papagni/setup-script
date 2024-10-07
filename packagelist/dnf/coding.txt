@@ -1,0 +1,7 @@
+git
+git-credential-oauth
+make
+gcc
+gcc-c++
+neovim
+java-21-openjdk
