@@ -1,0 +1,4 @@
+DOTS_DIR="$HOME/.dotfiles"
+DOTS_REPO="https://github.com/lu-papagni/dots.git" 
+SOURCES_SRC_DIR="packagelist"
+FAV_SHELL="zsh"

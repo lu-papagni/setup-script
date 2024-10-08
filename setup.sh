@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 
+# Importa impostazioni
+source 'conf/script-settings'
+
 # Importa tutti i moduli
 for f in modules/*.sh; do source $f; done
-
-readonly DOTS_DIR="$HOME/.dotfiles"
-readonly DOTS_REPO='https://github.com/lu-papagni/dots.git' 
-readonly SOURCES_SRC_DIR="packagelist"
-readonly FAV_SHELL='zsh'
 
 if [[ ! -d "$DOTS_DIR" ]]; then
   mkdir -p "$DOTS_DIR"
