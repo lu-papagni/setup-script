@@ -14,22 +14,23 @@ function Enable-SystemdUnits() {
 
   # Abilita unità
   for unit in "${units[@]}"; do
-    local unit_name="$(basename "$unit")"
+    local timer
+    local target_file="$unit"
 
     # Se è un servizio controllo che ci sia un timer associato
     if [[ "$unit" == *.service ]]; then
       # Sostituisco `.service` con `.timer`
-      local timer_name="${unit_name%\.service}.timer"
+      timer="${unit%\.service}.timer"
 
-      [[ -f "$timer_name" ]] && unit_name="$timer_name"
+      [[ -f "$timer" ]] && target_file="$timer"
     fi
 
-    systemctl "$flags" enable "$unit_name"
+    systemctl "$flags" enable "$target_file"
 
     if [[ $? -eq 0 ]]; then
-      echo "Abilitata unità: \`$unit_name\`" >&2
+      echo "Abilitata unità: \`$(basename $target_file)\`" >&2
     else
-      echo "Errore abilitazione unità: \`$unit_name\`" >&2
+      echo "Errore abilitazione unità: \`$(basename $target_file)\`" >&2
     fi
   done
 }
