@@ -6,12 +6,12 @@
 - [x] Linkare i file/cartelle dalla repository a `~/.config`
 - [x] Cambiare la shell di default
 - [ ] Configurare Spicetify
-- [ ] Bluetooth
+- [x] Bluetooth
 - [ ] Firewall
 - [x] Configurare `git-credential-oauth`
 - [x] Configurare KDE
 - [x] Supporto Arch Linux
-- [ ] OPZIONALE: supporto Fedora
+- [x] OPZIONALE: supporto Fedora
 - [ ] OPZIONALE: supporto Debian
 
 ## Organizzazione del codice
