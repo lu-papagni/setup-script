@@ -1,3 +1,13 @@
+plasma-meta
+egl-wayland
+plasma-workspace
+kate
+ark
+dolphin
+kolourpaint
+filelight
+gwenview
+kcalc
 konsave
 power-profiles-daemon
 spectacle
