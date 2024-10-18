@@ -3,6 +3,7 @@
 \.gitmodules
 .*\.md
 DOCS$/
+MISC$/
 setup$/
 .*.ohmyzsh
 systemd$/
