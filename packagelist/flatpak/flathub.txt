@@ -1,4 +1,3 @@
 com.spotify.Client
 com.discordapp.Discord
-com.github.tchx84.Flatseal
 com.brave.Browser
