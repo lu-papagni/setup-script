@@ -17,16 +17,9 @@ function Setup-PackageManager() {
     'flatpak')
       # flathub
       echo "Aggiungo FlatHub..."
-      flatpak remote-add --if-not-exixts 'flathub' 'https://dl.flathub.org/repo/flathub.flatpakrepo'
+      flatpak remote-add --if-not-exists 'flathub' 'https://dl.flathub.org/repo/flathub.flatpakrepo'
       ;;
     'dnf')
-      # Impostazioni migliori per dnf
-      echo "Carico impostazioni migliori per \`dnf\`"
-      echo '
-      defaultyes=True
-      fastestmirror=True
-      max_parallel_downloads=10
-      ' | sudo tee -a /etc/dnf/dnf.conf
 
       # Ricreo la cache
       sudo dnf clear all
@@ -144,8 +137,13 @@ function Install-Packages() {
           run_as="user"
           skip_confirm_cmd="-y"
           ;;
+        'pip')
+          install_cmd="install"
+          run_as="user"
+          skip_confirm_cmd="--no-input"
+          ;;
         *)
-          echo "Il package manager non è supportato."
+          echo "Il package manager \`$manager\` non è supportato." >&2
           ;;
       esac
 
