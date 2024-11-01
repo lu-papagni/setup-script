@@ -4,4 +4,3 @@ make
 gcc
 gcc-c++
 neovim
-java-21-openjdk
