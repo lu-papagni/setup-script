@@ -3,3 +3,4 @@ fzf
 kitty
 bat
 btop
+fastfetch
