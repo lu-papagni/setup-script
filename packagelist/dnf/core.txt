@@ -4,3 +4,5 @@ kitty
 bat
 btop
 fastfetch
+lsd
+rclone
