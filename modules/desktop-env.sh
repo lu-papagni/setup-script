@@ -7,6 +7,6 @@ function Setup-DesktopEnvironment() {
     echo "KDE Plasma (ver. $KDE_SESSION_VERSION) rilevato."
 
     read -p "Nome del profilo KDE da caricare: " plasma_profile
-    konsave -a "$plasma_profile"
+    python3 -m konsave -a "$plasma_profile"
   fi
 }
