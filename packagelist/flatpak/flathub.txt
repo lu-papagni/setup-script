@@ -1,3 +1,0 @@
-com.spotify.Client
-com.discordapp.Discord
-com.brave.Browser
