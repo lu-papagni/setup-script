@@ -13,7 +13,7 @@ function Enable-SystemdUnits() {
   local units=("$(find "$src_dir" -mindepth 1 -type f -regextype posix-extended -regex '.*\.(service|timer)$')")
 
   # Abilita unità
-  for unit in "${units[@]}"; do
+  for unit in ${units[@]}; do
     local timer
     local target_file="$unit"
 
