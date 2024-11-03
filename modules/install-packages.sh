@@ -114,7 +114,7 @@ function Install-Packages() {
       local run_as
       local skip_confirm_cmd
 
-      Setup-PackageManager
+      Setup-PackageManager "$manager"
 
       case "$manager" in
         'yay')
