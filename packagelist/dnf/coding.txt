@@ -4,3 +4,4 @@ make
 gcc
 gcc-c++
 neovim
+python3-pip
