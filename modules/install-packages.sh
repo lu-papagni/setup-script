@@ -18,6 +18,7 @@ function Setup-PackageManager() {
       # flathub
       echo "Aggiungo FlatHub..."
       flatpak remote-add --if-not-exists 'flathub' 'https://dl.flathub.org/repo/flathub.flatpakrepo'
+      flatpak update --appstream
       ;;
     'dnf')
 
