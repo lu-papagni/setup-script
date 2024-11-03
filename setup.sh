@@ -15,7 +15,7 @@ if [[ ! -d "$DOTS_DIR" ]]; then
     exit 1
   fi
 
-  ( cd "$DOTS_REPO" && git submodule update --remote )
+  ( cd "$DOTS_DIR" && git submodule update --remote )
 fi
 
 Setup-System
