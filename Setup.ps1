@@ -19,8 +19,9 @@ if ($install.enabled) {
 }
 
 if ($configure.enabled) {
+  $confDir = Resolve-Path $Config | Split-Path -Parent
   Write-Host -ForegroundColor Green "Inizio importazione configurazione..."
-  Import-Settings -Programs $configure.programs -Debug $DryRun
+  Import-Settings -Programs $configure.programs -ConfigPath $confDir -Debug $DryRun
   Write-Host -ForegroundColor Green "Terminato!"
 } else {
   Write-Warning "Salto importazione file di configurazione"

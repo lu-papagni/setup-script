@@ -1,47 +1,68 @@
 function Import-Settings {
-  param($Programs, [bool]$Debug = $false)
+  param(
+    $Programs,
+    [string]$ConfigPath = '.',
+    [bool]$Debug = $false
+  )
 
   if ($Debug) {
-    Write-Host -ForegroundColor Magenta "Contenuto di '`$Programs'"
-    Write-Host -ForegroundColor Magenta $Programs
+    Write-Host -ForegroundColor Magenta "Contenuto di '`$Programs' = "
+    ConvertTo-Json $Programs | Write-Host -ForegroundColor Magenta
+    Write-Host -ForegroundColor Magenta "Contenuto di '`$ConfigPath' = "
+    Write-Host -ForegroundColor Magenta $ConfigPath
+  }
+
+  if (-not (Test-Path -Path $ConfigPath -PathType Container)) {
+    Write-Error "'$ConfigPath' non è una directory valida!"
+    return
+  }
+
+  if ($Programs -eq $null) {
+    Write-Error "Errore nella configurazione!"
+    return
   }
 
   # per ogni programma
   foreach ($program in $Programs.keys) {
-    if (Test-Path -Path "$program" -PathType Container) {
+    if (Test-Path -Path "$ConfigPath\$program" -PathType Container) {
       $targetList = $Programs["$program"]
+      $programSrcDir = $ConfigPath, $program -join '\'
 
       # per ogni regola
       foreach ($target in $targetList) {
-        $fileRegex = $target.fileLike
-        $configPath = $target.configPath
+        $fileRegex = $target.name
+        $absRootDir = Get-Item -Path ("Env:\" + $target.root) | Select-Object -ExpandProperty Value
+        $linkDestDir = $absRootDir, $target.destination -join '\'
 
-        try {
+        # crea la cartella se non esiste
+        if (-not (Test-Path -PathType Container -Path $linkDestDir)) {
           if (-not $Debug) {
-            New-Item -ItemType Directory -Path "$configPath" -ErrorAction Stop
+            New-Item -ItemType Directory -Path "$linkDestDir"
           } else {
-            Write-Warning "Avrei creato la directory '$configPath'"
+            Write-Host -ForegroundColor Magenta "DEBUG: Avrei creato la directory '$linkDestDir'"
           }
-        } catch [System.IO.IOException] {
-          Write-Host -ForegroundColor Green "Il percorso '$configPath' esiste, non verrà sovrascritto"
+        } else {
+          Write-Warning "Il percorso '$linkDestDir' esiste, non verrà sovrascritto"
         }
 
-        $targetFiles = Get-ChildItem "$program"
+        # ottieni nomi file
+        $targetFiles = Resolve-Path "$programSrcDir"
+          | Get-ChildItem
           | Where-Object { $_.Name -match "$fileRegex" }
           | Select-Object -ExpandProperty Name
 
         # per ogni nome file che corrisponde alla regola
         foreach ($fileName in $targetFiles) {
+          $programAbsPath = Resolve-Path "$programSrcDir\$fileName"
+
           if (-not $Debug) {
-            # TODO: Convertire in collegamento simbolico
-            Copy-Item "$program\$fileName" "$configPath" -Force
+            New-Item -ItemType SymbolicLink -Path "$linkDestDir\$fileName" -Value "$programAbsPath"
           } else {
-            Write-Warning "Avrei linkato '$program\$fileName' in '$configPath'"
+            Write-Host -ForegroundColor Magenta "DEBUG: Avrei linkato '$programAbsPath' a '$linkDestDir\$fileName'"
           }
         }
 
       }
-
     } else {
       Write-Error "Impossibile trovare le impostazioni di '$program'"
     }
