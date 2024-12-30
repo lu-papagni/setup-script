@@ -56,7 +56,7 @@ function Import-Settings {
           $programAbsPath = Resolve-Path "$programSrcDir\$fileName"
 
           if (-not $Debug) {
-            New-Item -ItemType SymbolicLink -Path "$linkDestDir\$fileName" -Value "$programAbsPath"
+            New-Item -ItemType SymbolicLink -Path "$linkDestDir\$fileName" -Value "$programAbsPath" -Force
           } else {
             Write-Host -ForegroundColor Magenta "DEBUG: Avrei linkato '$programAbsPath' a '$linkDestDir\$fileName'"
           }
