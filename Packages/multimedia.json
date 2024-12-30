@@ -7,7 +7,6 @@
       "Packages" : 
       [
         { "PackageIdentifier" : "Audacity.Audacity" },
-        { "PackageIdentifier" : "VideoLAN.VLC" },
         { "PackageIdentifier" : "PowerSoftware.AnyBurn" },
         { "PackageIdentifier" : "HandBrake.HandBrake" },
         { "PackageIdentifier" : "MoritzBunkus.MKVToolNix" },

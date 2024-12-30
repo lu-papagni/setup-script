@@ -7,12 +7,12 @@
       "Packages" : 
       [
         { "PackageIdentifier" : "EclipseAdoptium.Temurin.21.JDK" },
+        { "PackageIdentifier" : "VideoLAN.VLC" },
         { "PackageIdentifier" : "Microsoft.PowerShell" },
         { "PackageIdentifier" : "WinFsp.WinFsp" },
         { "PackageIdentifier" : "Brave.Brave" },
         { "PackageIdentifier" : "Discord.Discord" },
         { "PackageIdentifier" : "Spotify.Spotify" },
-        { "PackageIdentifier" : "Microsoft.AppInstaller" },
         { "PackageIdentifier" : "Microsoft.WindowsTerminal" }
       ],
       "SourceDetails" : 
