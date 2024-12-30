@@ -11,6 +11,7 @@
         { "PackageIdentifier" : "RevoUninstaller.RevoUninstaller" },
         { "PackageIdentifier" : "qBittorrent.qBittorrent" },
         { "PackageIdentifier" : "Rclone.Rclone" },
+        { "PackageIdentifier" : "Cyanfish.NAPS2" },
         { "PackageIdentifier" : "Microsoft.PowerToys" },
       ],
       "SourceDetails" : 
