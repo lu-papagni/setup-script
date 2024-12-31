@@ -1,0 +1,6 @@
+zsh
+fzf
+bat
+btop
+fastfetch
+lsd

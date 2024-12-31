@@ -35,7 +35,10 @@ function Setup-PackageManager() {
         "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
       ;;
     'apt' | 'apt-get')
-      echo "ATTENZIONE: nessun setup specifico per \`$manager\`"
+      sudo apt update
+      sudo apt upgrade
+      sudo apt full-upgrade
+      sudo apt autoremove --purge
       ;;
   esac
 }

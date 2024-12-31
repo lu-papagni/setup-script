@@ -57,7 +57,13 @@ function Setup-Distribution() {
       fi
       ;;
     'debian')
-      echo "Coming soon..."
+      # Sostituzione della versione con "testing"
+      sudo sed -i.bak 's/\(stable\|bullseye\|bookworm\|trixie\)/testing/g' /etc/apt/sources.list
+
+      # Commenta righe con "-backports" e "-updates"
+      sudo sed -i '/-backports\|-updates/s/^/# /' /etc/apt/sources.list
+
+      echo "Il file /etc/apt/sources.list è stato aggiornato. Backup creato come /etc/apt/sources.list.bak."
       ;;
     *)
       echo "La distribuzione \`$current_name\` non è supportata!"
