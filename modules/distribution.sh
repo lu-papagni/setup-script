@@ -57,13 +57,21 @@ function Setup-Distribution() {
       fi
       ;;
     'debian')
+      local -r deb_srclist='/etc/apt/sources.list' 
+      local -r deb_dropin='/etc/apt/sources.list.d'
+
+      echo "Configurazione di Debian in corso..."
+
+      sudo mkdir -p "$deb_dropin"
+      sudo cp "$deb_srclist" "$deb_dropin"
+
       # Sostituzione della versione con "testing"
-      sudo sed -i.bak 's/\(stable\|bullseye\|bookworm\|trixie\)/testing/g' /etc/apt/sources.list
+      sudo sed -i.bak 's/\(stable\|bullseye\|bookworm\|trixie\)/testing/g' "$deb_dropin/sources.list"
 
       # Commenta righe con "-backports" e "-updates"
-      sudo sed -i '/-backports\|-updates/s/^/# /' /etc/apt/sources.list
+      sudo sed -i '/-backports\|-updates/s/^/# /' "$deb_dropin/sources.list"
 
-      echo "Il file /etc/apt/sources.list è stato aggiornato. Backup creato come /etc/apt/sources.list.bak."
+      echo "Liste aggiornate. Backup creato come $deb_dropin/sources.list.bak"
       ;;
     *)
       echo "La distribuzione \`$current_name\` non è supportata!"
