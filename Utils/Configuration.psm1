@@ -32,7 +32,7 @@ function Import-Settings {
       foreach ($target in $targetList) {
         $fileRegex = $target.name
         $absRootDir = Get-Item -Path ("Env:\" + $target.root) | Select-Object -ExpandProperty Value
-        $linkDestDir = $absRootDir, $target.destination -join '\'
+        $linkDestDir = Join-Path $absRootDir $target.destination
 
         # crea la cartella se non esiste
         if (-not (Test-Path -PathType Container -Path $linkDestDir)) {
@@ -59,6 +59,7 @@ function Import-Settings {
             New-Item -ItemType SymbolicLink -Path "$linkDestDir\$fileName" -Value "$programAbsPath" -Force
           } else {
             Write-Host -ForegroundColor Magenta "DEBUG: Avrei linkato '$programAbsPath' a '$linkDestDir\$fileName'"
+            Write-Host -ForegroundColor Magenta ("DEBUG: `$linkDestDir = '$absRootDir' + '" + $target.destination + "'")
           }
         }
 
