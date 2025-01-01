@@ -3,6 +3,19 @@ param(
   [switch]$DryRun
 )
 
+$MINIMUM_VER = 7
+
+if ($Host.Version.Major -lt $MINIMUM_VER) {
+  $hostVersion = Get-Host | Select-Object -ExpandProperty Version
+
+  Write-Host -ForegroundColor Red "Versione di PowerShell incompatibile!"
+  Write-Host -ForegroundColor Red "La tua versione: $hostVersion"
+  Write-Host -ForegroundColor Red "Versione minima richiesta: $MINIMUM_VER"
+  Write-Host -ForegroundColor Cyan "Prova ad installare PowerShell $MINIMUM_VER con ``winget install Microsoft.PowerShell``"
+
+  exit 1
+}
+
 Import-Module "$PSScriptRoot\Utils\Configuration.psm1"
 Import-Module "$PSScriptRoot\Utils\Installation.psm1"
 
