@@ -3,23 +3,19 @@ param(
   [switch]$DryRun
 )
 
-$MINIMUM_VER = 7
+# Importo moduli
+$modulePath = Join-Path -Path $PSScriptRoot -ChildPath "Modules"
+Import-Module -Name (Join-Path -Path $modulePath -ChildPath "Configuration.psm1")
+Import-Module -Name (Join-Path -Path $modulePath -ChildPath "Installation.psm1")
+Import-Module -Name (Join-Path -Path $modulePath -ChildPath "Utility.psm1")
 
-if ($Host.Version.Major -lt $MINIMUM_VER) {
-  $hostVersion = Get-Host | Select-Object -ExpandProperty Version
+# Esce se powershell non è almeno versione 5.0
+Test-Compatibility -ShellVersion 5
 
-  Write-Host -ForegroundColor Red "Versione di PowerShell incompatibile!"
-  Write-Host -ForegroundColor Red "La tua versione: $hostVersion"
-  Write-Host -ForegroundColor Red "Versione minima richiesta: $MINIMUM_VER"
-  Write-Host -ForegroundColor Cyan "Prova ad installare PowerShell $MINIMUM_VER con ``winget install Microsoft.PowerShell``"
-
-  exit 1
-}
-
-Import-Module "$PSScriptRoot\Utils\Configuration.psm1"
-Import-Module "$PSScriptRoot\Utils\Installation.psm1"
-
-$scriptSettings = Get-Content -Raw "$Config" | ConvertFrom-Json -AsHashTable
+# Solo powershell 7:
+# $scriptSettings = Get-Content -Raw "$Config" | ConvertFrom-Json -AsHashTable
+$scriptSettings = Get-Content -Raw "$Config" | ConvertFrom-Json
+$scriptSettings = Convert-JsonObject -Source $scriptSettings
 $install = $scriptSettings.installPrograms
 $configure = $scriptSettings.configFiles
 

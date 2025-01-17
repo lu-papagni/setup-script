@@ -46,9 +46,9 @@ function Import-Settings {
         }
 
         # ottieni nomi file
-        $targetFiles = Resolve-Path "$programSrcDir"
-          | Get-ChildItem
-          | Where-Object { $_.Name -match "$fileRegex" }
+        $targetFiles = Resolve-Path "$programSrcDir" `
+          | Get-ChildItem `
+          | Where-Object { $_.Name -match "$fileRegex" } `
           | Select-Object -ExpandProperty Name
 
         # per ogni nome file che corrisponde alla regola
