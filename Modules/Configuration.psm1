@@ -22,11 +22,25 @@ function Import-Settings {
     return
   }
 
+  if ($Debug) {
+    Write-Host -ForegroundColor Magenta "`$Programs = "
+    Write-Host -ForegroundColor Magenta $Programs
+    Write-Host -ForegroundColor Magenta "`$Programs.PSObject.Properties.Name = "
+    Write-Host -ForegroundColor Magenta $Programs.PSObject.Properties.Name
+  }
+
+  $programDirNames = $Programs.PSObject.Properties.Name
+
   # per ogni programma
-  foreach ($program in $Programs.keys) {
+  foreach ($program in $programDirNames) {
     if (Test-Path -Path "$ConfigPath\$program" -PathType Container) {
-      $targetList = $Programs["$program"]
+      $targetList = $Programs.$program
       $programSrcDir = $ConfigPath, $program -join '\'
+
+      if ($Debug) {
+        Write-Host -ForegroundColor Magenta "`$targetList = "
+        Write-Host -ForegroundColor Magenta $targetList
+      }
 
       # per ogni regola
       foreach ($target in $targetList) {
@@ -42,7 +56,7 @@ function Import-Settings {
             Write-Host -ForegroundColor Magenta "DEBUG: Avrei creato la directory '$linkDestDir'"
           }
         } else {
-          Write-Warning "Il percorso '$linkDestDir' esiste, non verrà sovrascritto"
+          Write-Warning "Il percorso '$linkDestDir' esiste, non lo sovrascrivo."
         }
 
         # ottieni nomi file
@@ -50,6 +64,11 @@ function Import-Settings {
           | Get-ChildItem `
           | Where-Object { $_.Name -match "$fileRegex" } `
           | Select-Object -ExpandProperty Name
+
+        if ($Debug) {
+          Write-Host -ForegroundColor Magenta "`$targetFiles = "
+          Write-Host -ForegroundColor Magenta $targetFiles
+        }
 
         # per ogni nome file che corrisponde alla regola
         foreach ($fileName in $targetFiles) {
