@@ -1,7 +1,7 @@
 # Script di setup per Windows
 
 ## Compatibilità
-Lo script è compatibile con tutti i PC Windows con una versione di **PowerShell** <= `5.0`.
+Lo script è compatibile con tutti i PC Windows con una versione di **PowerShell** >= `5.0`.
 
 ## Uso
 1. Clonare la repository
@@ -100,7 +100,7 @@ il file di configurazione e le destinazioni specificate.
         <th>Descrizione</th>
     </tr>
     <tr>
-        <td><i color="magenta">user defined</i></td>
+        <td><i>user defined</i></td>
         <td>Lista di oggetti</td>
         <td>
             La chiave è il nome <b>user defined</b> della sotto-cartella che
