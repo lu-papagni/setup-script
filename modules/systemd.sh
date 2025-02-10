@@ -38,6 +38,8 @@ function Enable-SystemdUnits() {
 function Setup-Systemd() {
   local -r systemd_dots="${DOTS_DIR:-"$HOME/.dotfiles"}/systemd"
 
+  [[ "$SETUP_SYSTEMD_UNITS" = true ]] || return
+
   if [[ -d "$systemd_dots" ]]; then
     echo "Abilito unità di sistema" >&2
     Enable-SystemdUnits "$systemd_dots/system"
