@@ -34,7 +34,7 @@ function Setup-PackageManager() {
       sudo dnf install \
         "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
       ;;
-    'apt' | 'apt-get')
+    'apt-get')
       sudo apt update
       sudo apt upgrade
       sudo apt full-upgrade
@@ -101,7 +101,7 @@ function Get-PrivilegePrefix() {
 
 # Logica principale installazione
 function Install-Packages() {
-  local sources_dir="${SOURCES_SRC_DIR:-"packagelist"}"
+  local -r sources_dir="${1:-$SOURCES_SRC_DIR}"
 
   # Controllo se esiste la directory
   if [[ ! -d "$sources_dir" ]]; then
@@ -109,6 +109,7 @@ function Install-Packages() {
     return 1
   fi
 
+  # Ottengo i nomi dei package manager a partire dai nomi delle liste
   local -r managers=("$(find "$sources_dir" -mindepth 1 -maxdepth 1 -type d | xargs -I{} basename {})")
 
   # Parsing del file
@@ -120,36 +121,24 @@ function Install-Packages() {
 
       Setup-PackageManager "$manager"
 
-      case "$manager" in
-        'yay')
-          install_cmd="-S --needed"
-          run_as="user"
-          skip_confirm_cmd="--noconfirm --askyesremovemake"
-          ;;
-        'dnf')
-          install_cmd="install"
-          run_as="root"
-          skip_confirm_cmd="-y"
-          ;;
-        'apt' | 'apt-get')
-          install_cmd="install"
-          run_as="root"
-          skip_confirm_cmd="-y"
-          ;;
-        'flatpak')
-          install_cmd="install"
-          run_as="user"
-          skip_confirm_cmd="-y"
-          ;;
-        'pip')
-          install_cmd="install"
-          run_as="user"
-          skip_confirm_cmd="--no-input"
-          ;;
-        *)
-          echo "Il package manager \`$manager\` non è supportato." >&2
-          ;;
-      esac
+      local -r manager_conf="$SETUP_CONF_DIR/pkgman/$manager.cfg"
+
+      # Controllo se esiste una configurazione per questo package manager
+      if [[ -f "$manager_conf" ]]; then
+        source "$manager_conf"
+
+        # Controllo che tutte le variabili siano impostate
+        if [[ -z $install_cmd || -z $run_as || -z $skip_confirm_cmd ]]; then
+          echo "Un parametro obbligatorio è stato omesso in '$manager_conf'"
+          echo "Annullo operazione per \`$manager\`"
+          continue
+        fi
+      else
+        echo "Salto \`$manager\` : impossibile trovare configurazione."
+
+        # Passa al prossimo
+        continue
+      fi
 
       # Ottengo le fonti
       local sources=("$(find "$sources_dir/$manager" -mindepth 1 -type f -name '*.txt')")
