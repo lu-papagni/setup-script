@@ -10,7 +10,8 @@
         { "PackageIdentifier" : "OpenJS.NodeJS" },
         { "PackageIdentifier" : "Python.Launcher" },
         { "PackageIdentifier" : "Python.Python.3.11" },
-        { "PackageIdentifier" : "Microsoft.WindowsTerminal" }
+        { "PackageIdentifier" : "Microsoft.WindowsTerminal" },
+        { "PackageIdentifier" : "equalsraf.win32yank" }
       ],
       "SourceDetails" : 
       {
