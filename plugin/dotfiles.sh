@@ -6,7 +6,7 @@ source ./plugin/utils.sh
 
 function download_dotfiles() {
   local url=
-  local dots="$HOME/${$DOTFILES_DIR:-".dotfiles"}"
+  local dots="$HOME/${DOTFILES_DIR:-".dotfiles"}"
 
   if [[ -n $DOTFILES_REPO && ! -d $dots ]]; then
     printf -v url 'https://github.com/%s.git' "$DOTFILES_REPO"
@@ -25,7 +25,7 @@ function download_dotfiles() {
 }
 
 function link_dotfiles() {
-  local dots="$HOME/${$DOTFILES_DIR:-".dotfiles"}"
+  local dots="$HOME/${DOTFILES_DIR:-".dotfiles"}"
   local blacklist="${SYMLINK_BLACKLIST:--}"
 
   if [[ -d "$dots/.git" ]]; then
