@@ -10,9 +10,7 @@ function download_dotfiles() {
 
   if [[ -n $DOTFILES_REPO ]]; then
     printf -v url 'https://github.com/%s.git' "$DOTFILES_REPO"
-
-    command -v 'git' > /dev/null
-      && git clone "$url" "$dots" > /dev/null 2>&1
+    command -v 'git' > /dev/null && git clone "$url" "$dots" > /dev/null 2>&1
 
     if [[ $? -ne 0 ]]; then
       perror 'clonazione repository fallita!'
@@ -40,10 +38,10 @@ function link_dotfiles() {
 
       if [[ -d "$item" ]]; then
         # directory in ~/.config
-        dest="${XDG_CONFIG_HOME:-$HOME/.config}"
+        dest="${XDG_CONFIG_HOME:-$HOME/.config}/$(basename "$item")"
       else
         # file in ~
-        dest="$HOME"
+        dest="$HOME/$(basename "$item")"
       fi
 
       ln -s "$item" "$dest"
