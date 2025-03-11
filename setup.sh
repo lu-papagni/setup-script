@@ -1,10 +1,6 @@
-usage() {
-  printf -- 'Script di setup per Linux\n\n'
-  printf -- 'SINTASSI: setup.sh [file_cfg]\n'
-  printf -- 'PARAMETRI\n'
-  printf '%s:\t%s\n' 'file_cfg' 'Percorso assoluto o relativo di un file di configurazione compatibile.'
-  printf -- '\t\tSe non viene fornito verrà richiesto in input.'
-}
+#!/usr/bin/env bash
+
+set -e
 
 if [[ -n $1 && -f $1 ]]; then
   SETUP_CFG_FILE="$1"
@@ -15,7 +11,6 @@ else
 
   if [[ ! -f $SETUP_CFG_FILE ]]; then
     echo "Impossibile trovare il file \`$SETUP_CFG_FILE\`. Riprovare."
-    usage
     exit 1
   fi
 fi
