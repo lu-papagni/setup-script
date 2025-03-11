@@ -8,13 +8,15 @@ function download_dotfiles() {
   local url=
   local dots="$HOME/${DOTFILES_DIR:-".dotfiles"}"
 
-  if [[ -n $DOTFILES_REPO && ! -d $dots ]]; then
-    printf -v url 'https://github.com/%s.git' "$DOTFILES_REPO"
-    command -v 'git' > /dev/null && git clone "$url" "$dots" > /dev/null 2>&1
-
-    if [[ $? -ne 0 ]]; then
-      perror 'clonazione repository fallita!'
-      return 2
+  if [[ -n $DOTFILES_REPO ]]; then
+    if [[ ! -d $dots ]]; then
+      printf -v url 'https://github.com/%s.git' "$DOTFILES_REPO"
+      command -v 'git' > /dev/null && git clone "$url" "$dots" > /dev/null 2>&1
+      
+      if [[ $? -ne 0 ]]; then
+        perror 'clonazione repository fallita!'
+        return 2
+      fi
     fi
   else
     perror 'repository non definita.'
