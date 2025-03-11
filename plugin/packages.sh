@@ -41,29 +41,25 @@ function configure_mirrors() {
 
 function install_packages() {
   if [[ $(id -u) -ne 0 ]]; then
-    perror 'per configurare i mirror sono necessari permessi di root.'
+    perror 'per installare i pacchetti sono necessari permessi di root.'
     return -1
   fi
 
-  if [[ -z "$INSTALL_PACKAGES" ]]; then
-    perror 'nessun pacchetto da installare.'
-    return 1
-  fi
+  if [[ -n "$INSTALL_PACKAGES" ]]; then
+    local distro="$(get_distro)"
+    pinfo "trovati ${#INSTALL_PACKAGES[@]} pacchetti da installare."
 
-  pinfo "trovati ${#INSTALL_PACKAGES[@]} pacchetti da installare."
-
-  local distro="$(get_distro)"
-
-  case "$distro" in
-    'debian')
-      if [[ -n "$INSTALL_PACKAGES" ]]; then
+    case "$distro" in
+      'debian')
         apt-get update
         apt-get install --no-install-recommends "${INSTALL_PACKAGES[@]}" -y
-      fi
-      ;;
-    *)
-      ;;
-  esac
+        ;;
+      *)
+        perror "distribuzione \`$distro\` non supportata."
+        return 1
+        ;;
+    esac
+  fi
 
   return 0
 }
