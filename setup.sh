@@ -23,10 +23,17 @@ source ./plugin/tmpfs.sh
 source ./plugin/dotfiles.sh
 source ./plugin/packages.sh
 
+echo 'Download e collegamento simbolico file di configurazione...'
 download_dotfiles && link_dotfiles
+
+echo 'Configurazione mirror e installazione pacchetti...'
 configure_mirrors && install_packages
 
 # Solo per WSL
 if [[ $(grep -ic 'Microsoft' /proc/sys/kernel/osrelease) -ge 1 ]]; then
+  echo 'Impostazioni specifiche di WSL'
+  echo 'Configurazione di tmpfs...'
   configure_tmpfs
 fi
+
+echo 'Configurazione terminata con successo!'
