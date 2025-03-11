@@ -10,23 +10,25 @@ function configure_mirrors() {
     return -1
   fi
 
-  local distro="$(grep 'ID=' /etc/os-release | sed 's/ID=//')"
+  local distro="$(get_distro)"
 
   case "$distro" in
     'debian')
       if [[ $ENABLE_UNSTABLE_MIRRORS = true ]]; then
-        pinfo 'passo a debian testing.'
+        pinfo 'passo ai mirror di debian testing.'
 
-        cat > /etc/apt/sources.list <<EOF
-        deb http://deb.debian.org/debian testing main
-        deb http://security.debian.org/debian-security testing-security main
-        EOF
+        local mirrors=(
+          'deb http://deb.debian.org/debian testing main'
+          'deb http://security.debian.org/debian-security testing-security main'
+        )
+
+        printf '%s\n' "${mirrors[@]}" | tee -p > /dev/null
       fi
 
-      apt update
-      apt upgrade -y
-      apt full-upgrade -y
-      apt autoremove -y
+      apt-get update
+      apt-get upgrade -y
+      apt-get full-upgrade -y
+      apt-get autoremove -y
       ;;
     *)
       perror "distribuzione \`$distro\` non supportata."
@@ -50,12 +52,12 @@ function install_packages() {
 
   pinfo "trovati ${#INSTALL_PACKAGES[@]} pacchetti da installare."
 
-  local distro="$(grep 'ID=' /etc/os-release | sed 's/ID=//')"
+  local distro="$(get_distro)"
 
   case "$distro" in
     'debian')
       if [[ -n "$INSTALL_PACKAGES" ]]; then
-        apt update
+        apt-get update
         apt-get install --no-install-recommends "${INSTALL_PACKAGES[@]}" -y
       fi
       ;;
