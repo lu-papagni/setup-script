@@ -2,9 +2,17 @@
 
 __import_utils=1
 
-alias perror="printf '\e[1;31mERRORE: %s\e[0m\n'"
-alias pwarn="printf '\e[1;33mATTENZIONE: %s\e[0m\n'"
-alias pinfo="printf '\e[1;32mINFO: %s\e[0m\n'"
+function perror() {
+  printf '\e[1;31mERRORE: %s\e[0m\n' "$1"
+}
+
+function pwarn() {
+  printf '\e[1;33mATTENZIONE: %s\e[0m\n' "$1"
+}
+
+function pinfo() {
+  printf '\e[1;32mINFO: %s\e[0m\n' "$1"
+}
 
 function get_distro() {
   echo "$(grep 'ID=' /etc/os-release | sed 's/ID=//')"
