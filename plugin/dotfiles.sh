@@ -8,7 +8,7 @@ function download_dotfiles() {
   local url=
   local dots="${DOTFILES_DIR:-$HOME/.dotfiles}"
 
-  if [[ -n $DOTFILES_REPO ]]; then
+  if [[ -n $DOTFILES_REPO && ! -d $dots ]]; then
     printf -v url 'https://github.com/%s.git' "$DOTFILES_REPO"
     command -v 'git' > /dev/null && git clone "$url" "$dots" > /dev/null 2>&1
 
@@ -32,6 +32,8 @@ function link_dotfiles() {
     if [[ -z $SYMLINK_BLACKLIST ]]; then
       pwarn 'blacklist non specificata, passo a lettura regex da tastiera.'
     fi
+
+    mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}"
 
     find "$dots" -mindepth 1 -maxdepth 1 | grep -Evf "$blacklist" | while read item; do
       local dest=
