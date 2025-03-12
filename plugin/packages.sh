@@ -22,7 +22,7 @@ function configure_mirrors() {
           'deb http://security.debian.org/debian-security testing-security main'
         )
 
-        printf '%s\n' "${mirrors[@]}" | tee -p > /dev/null
+        printf '%s\n' "${mirrors[@]}" | tee -p /etc/apt/sources.list > /dev/null
       fi
 
       apt-get update
