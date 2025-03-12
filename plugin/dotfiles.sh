@@ -5,17 +5,22 @@ __import_dotfiles=1
 source ./plugin/utils.sh
 
 function download_dotfiles() {
-  local url=
   local dots="$HOME/${DOTFILES_DIR:-".dotfiles"}"
 
   if [[ -n $DOTFILES_REPO ]]; then
+    local url="https://github.com/${DOTFILES_REPO}.git"
+
     if [[ ! -d $dots ]]; then
-      printf -v url 'https://github.com/%s.git' "$DOTFILES_REPO"
-      command -v 'git' > /dev/null && git clone "$url" "$dots" > /dev/null 2>&1
+      if [[ $(command -v 'git' > /dev/null) -ne 0 ]]; then
+        perror 'git non è disponibile.'
+        return 2
+      fi
+
+      git clone "$url" "$dots" > /dev/null 2>&1
       
       if [[ $? -ne 0 ]]; then
         perror 'clonazione repository fallita!'
-        return 2
+        return 3
       fi
     fi
   else
