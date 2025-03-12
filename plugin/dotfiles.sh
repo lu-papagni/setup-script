@@ -11,7 +11,7 @@ function download_dotfiles() {
     local url="https://github.com/${DOTFILES_REPO}.git"
 
     if [[ ! -d $dots ]]; then
-      if [[ $(command -v 'git' > /dev/null) -ne 0 ]]; then
+      if [[ -z "$(command -v 'git')" ]]; then
         perror 'git non è disponibile.'
         return 2
       fi
