@@ -13,12 +13,11 @@ function configure_tmpfs() {
       printf 'tmpfs\t/tmp\ttmpfs\t' >> /etc/fstab
       printf '%s,' "${fsargs[@]}" >> /etc/fstab
       printf 'size=%dm\t0 0' "$size" >> /etc/fstab
-
-      return 0
     fi
   else
     perror 'configurare `tmpfs` richiede privilegi di root.'
+    return 1
   fi
 
-  return 1
+  return 0
 }
