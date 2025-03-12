@@ -15,5 +15,5 @@ function pinfo() {
 }
 
 function get_distro() {
-  echo "$(grep 'ID=' /etc/os-release | sed 's/ID=//')"
+  printf '%s' "$(grep 'ID=' /etc/os-release | sed 's/ID=//')"
 }
