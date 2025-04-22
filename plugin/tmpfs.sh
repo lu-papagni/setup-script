@@ -6,10 +6,10 @@ source ./plugin/utils.sh
 
 function configure_tmpfs() {
   local fsargs=( 'noexec' 'defaults' 'nodev' 'nosuid' 'noatime' )
-  local -r size="${TMPFS_MAX_SIZE:-256}"
+  local -r size="${WSL_TMPFS_MAX_SIZE:-256}"
 
   if [[ $(id -u) -eq 0 ]]; then
-    if [[ $ENABLE_TMPFS = true ]]; then
+    if [[ $WSL_ENABLE_TMPFS = true ]]; then
       printf 'tmpfs\t/tmp\ttmpfs\t' >> /etc/fstab
       printf '%s,' "${fsargs[@]}" >> /etc/fstab
       printf 'size=%dm\t0 0' "$size" >> /etc/fstab

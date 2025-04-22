@@ -78,12 +78,12 @@ Questi sono i parametri che è possibile specificare:
     <td>./symlink_ignore</td>
   </tr>
   <tr>
-    <td>ENABLE_TMPFS</td>
+    <td>WSL_ENABLE_TMPFS</td>
     <td>Se la distribuzione non ha attivato tmpfs, come nel caso di WSL, abilita questa funzionalità.</td>
     <td>true</td>
   </tr>
   <tr>
-    <td>TMPFS_MAX_SIZE</td>
+    <td>WSL_TMPFS_MAX_SIZE</td>
     <td>
       Espresso in MiB. Se tmpfs viene configurato da questo script imposta questa dimensione come suo limite
       di capacità.
