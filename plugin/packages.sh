@@ -30,6 +30,11 @@ function configure_mirrors() {
       apt-get full-upgrade -y
       apt-get autoremove -y
       ;;
+    'fedora')
+      dnf clear all
+      dnf makecache
+      dnf upgrade -y
+      ;;
     *)
       perror "distribuzione \`$distro\` non supportata."
       return 1
