@@ -53,7 +53,7 @@ Questi sono i parametri che è possibile specificare:
   <tr>
     <td>ENABLE_UNSTABLE_MIRRORS</td>
     <td>Se disponibili, usa i repository di test/instabili.</td>
-    <td>true</td>
+    <td>false</td>
   </tr>
   <tr>
     <td>INSTALL_PACKAGES</td>
@@ -90,12 +90,12 @@ Questi sono i parametri che è possibile specificare:
       di capacità.
     </td>
     <td>256</td>
-  <<tr>
+  <tr>
     <td>USE_BOB_NVIM</td>
     <td>
       Se usare <code>bob</code> per gestire il pacchetto di neovim.
       Utile su distribuzioni che non aggiornano neovim correttamente.
     </td>
     <td>false</td>
-  </tr>/tr>
+  </tr>
 </tbody></table>
