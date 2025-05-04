@@ -7,9 +7,10 @@ l'installazione di una distribuzione Linux, come:
 
 ## Requisiti
 I seguenti software sono richiesti per eseguire con successo lo script:
-- Utility di base (`grep`, `find`, `sed`...)
+- Utility di base (`grep`, `find`, `sed`, `unzip` ...)
 - `bash`
 - `git`
+- `curl`
 
 ## Utilizzo
 1. Clonare questa repository
@@ -89,5 +90,12 @@ Questi sono i parametri che è possibile specificare:
       di capacità.
     </td>
     <td>256</td>
-  </tr>
+  <<tr>
+    <td>USE_BOB_NVIM</td>
+    <td>
+      Se usare <code>bob</code> per gestire il pacchetto di neovim.
+      Utile su distribuzioni che non aggiornano neovim correttamente.
+    </td>
+    <td>false</td>
+  </tr>/tr>
 </tbody></table>
