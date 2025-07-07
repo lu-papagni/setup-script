@@ -6,11 +6,17 @@ l'installazione di una distribuzione Linux, come:
 - Importare impostazioni dei software
 
 ## Requisiti
-I seguenti software sono richiesti per eseguire con successo lo script:
-- Utility di base (`grep`, `find`, `sed`, `unzip` ...)
-- `bash`
-- `git`
-- `curl`
+Per usare lo script sono richieste alcune utility di base.
+- Debian
+```bash
+apt-get install findutils unzip grep git
+
+```
+- Fedora
+```bash
+dnf install findutils unzip grep git
+```
+
 
 ## Utilizzo
 1. Clonare questa repository

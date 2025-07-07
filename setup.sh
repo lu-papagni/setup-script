@@ -15,6 +15,15 @@ else
   fi
 fi
 
+# Controllo dipendenze
+while read -r dep; do
+  if command -v "$dep" &> /dev/null; then
+    echo "Impossibile continuare: \`$dep\` non è installato."
+    echo 'Leggi la documentazione per conoscere le dipendenze di questo script.'
+    exit 2
+  fi
+done < ./.deps
+
 # Impostazioni
 source "$SETUP_CFG_FILE"
 
